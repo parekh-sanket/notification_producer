@@ -15,6 +15,12 @@ const notificationSchema = new Schema(
             require : true,
             enum : ['email', 'sms', 'push']
         },
+        email : {
+            type : String,
+        },
+        mobile : {
+            type : String,
+        },
         status : {
             type : String,
             default : "pending",

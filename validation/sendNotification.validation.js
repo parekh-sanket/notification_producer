@@ -5,11 +5,24 @@ const payloadSchema = Joi.object({
   message: Joi.string().required().max(500),
   scheduleTime: Joi.date(), // for scheduling
   channel: Joi.string().valid('email', 'sms', 'push').required(),
-  email : Joi.string().email()
+  email : Joi.string().email(),
+  mobile : Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/),
+  devicePushToken : Joi.string()
 }).custom((value,helper)=>{
   if(value.channel == "email" && !value.email){
     return helper.message("email is mendatory")
   }
+  
+  if(value.channel == "sms" && !value.mobile){
+    return helper.message("mobile is mendatory")
+  }
+  
+  if(value.channel == "push" && !value.devicePushToken){
+    return helper.message("devicePushToken is mendatory")
+  }
+
+  if(value.mobile) value.mobile = `+91${value.mobile}` // for indian number
+  
   return value
 });
 
