@@ -1,0 +1,6 @@
+{
+    "NotificationNotFound":{
+        "status" : 404,
+        "message" : "Notification not found"
+    }
+}
