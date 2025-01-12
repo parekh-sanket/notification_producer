@@ -5,18 +5,29 @@ const model = mongoose.model
 const notificationSchema = new Schema(
     {
         userId: {
-            type: Number,
+            type: String,
         },
         message: {
             type: String,
         },
+        channel : {
+            type : String,
+            require : true,
+            enum : ['email', 'sms', 'push']
+        },
         status : {
             type : String,
             default : "pending",
-            enum : ["pending", "processing","reschedule", "delivered", "failed"]
+            enum : ["pending", "processing", "delivered", "failed"]
         },
         scheduleTime: {
             type: Date,
+        },
+        retryCount : {
+            type : Number
+        },
+        lastRetryAt : {
+            type : Date
         }
     },
     {

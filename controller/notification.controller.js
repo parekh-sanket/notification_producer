@@ -32,7 +32,7 @@ async function getNotifications(req,res) {
         }
 
         // send notification kafka message
-        let response = sendNotificationService.getNotifications(value)
+        let response = await sendNotificationService.getNotifications(value)
 
         return res.status(200).json({message : response})
 
@@ -56,7 +56,7 @@ async function getNotificationById(req,res) {
         }
 
         // send notification kafka message
-        let response = sendNotificationService.getNotificationById(value)
+        let response = await sendNotificationService.getNotificationById(value)
 
         return res.status(200).json({message : response})
 
@@ -72,5 +72,6 @@ async function getNotificationById(req,res) {
 
 module.exports = {
     sendNotification,
-    getNotificationById
+    getNotificationById,
+    getNotifications
 }

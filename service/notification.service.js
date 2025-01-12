@@ -24,15 +24,15 @@ function sendNotification(notificationPayload){
 async function getNotificationById({
     notificationId
 }){
-    try{   
+    try{  
         let notification = await Notification.findOne({
-            _id : ObjectId(notificationId)
+            _id : new ObjectId(notificationId)
         })
         if(!notification){
             throw new Error("NotificationNotFound")
         }
 
-        return notification
+        return notification.toJSON()
     }catch(err){
         console.log("Error in controller -> getNotificationById function >>> " , err)
         throw err
@@ -48,16 +48,23 @@ async function getNotifications({
     limit
 }) {
     try{
-        let notifications = await Notification.findOne({
-            status,
-            channel,
-            ...(startDate && endDate ? {
-                createdAt : {
-                    $gte : startDate,
-                    $lte : endDate
-                }
-            } : {}),
-        }).sort({ createdAt : -1 }).page((page-1)*limit).limit(limit)
+
+        let query = {}
+
+        if(status){
+            query["status"] = status
+        }
+        if(channel){
+            query["channel"] = channel
+        }
+        if(startDate && startDate){
+            query["createdAt"] = {
+                $gte : startDate,
+                $lte : endDate
+            }
+        }
+
+        let notifications = await Notification.find(query).sort({ createdAt : -1 }).skip((page-1)*limit).limit(limit)
 
         if(!notifications){
             throw new Error("NotificationNotFound")

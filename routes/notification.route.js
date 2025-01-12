@@ -12,4 +12,9 @@ router.get(
     sendNotificationController.getNotificationById
 )
 
+router.get(
+    '/notifications',
+    sendNotificationController.getNotifications
+)
+
 module.exports = router
