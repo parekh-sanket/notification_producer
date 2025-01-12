@@ -13,7 +13,7 @@ Navigate to the config folder in the project directory.
 Open the development.json file and provide the required configurations.
 
 2. Start Docker
-Once the configuration is complete, you can start the Docker container.
+Once the configuration is complete, you can start the Docker container with --network="host"
 
 3. Usage
 Ensure the prerequisite services (Kafka, MongoDB) are running on your local machine.
